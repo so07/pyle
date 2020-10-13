@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
-# Copyright 2015 Sergio Orlandini
+# Copyright 2015 so07
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 
-__author__  = "Sergio Orlandini"
-__version__ = 'v0.1'
+__author__  = "so07"
+__version__ = "0.1.0"
 
 import os
 import glob
@@ -69,8 +69,6 @@ def get_files(args):
 
 def add_parser(parser, name='File', help=None):
 
-   #print "[PYLE] @add_parser", name
-
    pyle_parser = parser.add_argument_group(name + ' options')
 
    pyle_parser.add_argument("--from-date",
@@ -120,12 +118,10 @@ def add_parser(parser, name='File', help=None):
 
 
 def main(args):
-
-   print "Files:", get_files(args)
+   print("Files:", get_files(args))
 
 
 if __name__ == "__main__":
-   import argparse
 
    parser = argparse.ArgumentParser(prog='pyle',
                                     description='files management',
@@ -139,5 +135,5 @@ if __name__ == "__main__":
 
    args = parser.parse_args()
 
-   main( args )
+   main(args)
 
