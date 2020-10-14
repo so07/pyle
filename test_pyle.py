@@ -59,6 +59,33 @@ def test_add_parser_deprecated():
     add_parser(parser)
 
 
+def test_add_pyle_parser_with_name():
+    import argparse
+    from pyle import add_pyle_parser
+
+    parser = argparse.ArgumentParser()
+
+    add_pyle_parser(parser, name="pyle name")
+
+
+def test_add_pyle_parser_with_help():
+    import argparse
+    from pyle import add_pyle_parser
+
+    parser = argparse.ArgumentParser()
+
+    add_pyle_parser(parser, help="help of pyle arg")
+
+
+def test_add_pyle_parser_without_help():
+    import argparse
+    from pyle import add_pyle_parser
+
+    parser = argparse.ArgumentParser()
+
+    add_pyle_parser(parser, help=None)
+
+
 def test_get_files(tmpdir):
     import argparse
     import datetime

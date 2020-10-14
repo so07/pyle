@@ -1,6 +1,5 @@
 [run]
     source = pyle
-
     omit = setup.py
 
 [report]
