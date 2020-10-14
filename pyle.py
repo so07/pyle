@@ -16,7 +16,7 @@
 #
 
 __author__ = "so07"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 import os
 import glob
