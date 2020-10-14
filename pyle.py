@@ -40,6 +40,26 @@ def _date(s):
         raise ValueError("invalid date {}".format(s))
 
 
+def _filter_files(
+    files,
+    from_time=datetime.datetime(1970, 1, 1),
+    to_time=datetime.datetime.now(),
+    type_time="ctime",
+):
+    """return list of files in the data range"""
+    list_files = []
+    for f in files:
+        l = sorted(
+            glob.glob(f), key=lambda filename: getattr(os.stat(filename), "st_ctime")
+        )
+        for file in l:
+            file_time = getattr(os.stat(file), "st_" + type_time)
+            file_date = datetime.datetime(*time.localtime(file_time)[:6])
+            if from_time <= file_date <= to_time:
+                list_files.append(file)
+    return list_files
+
+
 def get_files(args):
 
     if isinstance(args, argparse.Namespace):
@@ -54,19 +74,7 @@ def get_files(args):
         _to_date = args["to_date"]
         _time_type = args["time_type"]
 
-    # print _files, _from_date, _to_date
-
-    list_files = []
-    for f in _files:
-        files = sorted(
-            glob.glob(f), key=lambda filename: getattr(os.stat(filename), "st_ctime")
-        )
-        for file in files:
-            file_time = getattr(os.stat(file), "st_" + _time_type)
-            file_date = datetime.datetime(*time.localtime(file_time)[:6])
-            if _from_date <= file_date <= _to_date:
-                list_files.append(file)
-    return list_files
+    return _filter_files(_files, _from_date, _to_date, _time_type)
 
 
 def add_pyle_parser(parser, name="File", help=None):
