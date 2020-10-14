@@ -69,7 +69,7 @@ def get_files(args):
     return list_files
 
 
-def add_parser(parser, name="File", help=None):
+def add_pyle_parser(parser, name="File", help=None):
 
     pyle_parser = parser.add_argument_group(name + " options")
 
@@ -127,6 +127,10 @@ def add_parser(parser, name="File", help=None):
     parser.add_argument(
         "pyle_files", default=[], nargs="+", metavar=name, help=files_help
     )
+
+
+def add_parser(parser, name="File", help=None):
+    add_pyle_parser(parser, name, help)
 
 
 def main(args):
