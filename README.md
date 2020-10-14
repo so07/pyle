@@ -18,7 +18,7 @@ pip install .
 
 Add command line options for date and time filtering for positional list of files
 
-```
+```python
 from pyle import add_pyle_parser, get_files
 
 parser = argparse.ArgumentParser(prog="pyle example")
