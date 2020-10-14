@@ -1,5 +1,7 @@
 # pyle
 
+[![Build Status](https://travis-ci.com/so07/pyle.svg?branch=master)](https://travis-ci.com/so07/pyle)
+
 Python package for filtering files from command line.
 Add Command Line Options to `argparse` module for date and time filtering positional list of files.
 
