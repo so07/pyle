@@ -22,6 +22,19 @@ def touch_file(d, f):
     return path
 
 
+def get_pyle_path():
+    """return pyle module path"""
+    import pyle
+
+    return os.path.dirname(pyle.__file__)
+
+
+def add_pyle_path(l):
+    """add pyle module path to a list of files"""
+    pyle_path = get_pyle_path()
+    return [os.path.join(pyle_path, i) for i in l]
+
+
 def test_import_pyle():
     import pyle
     from pyle import add_pyle_parser
@@ -75,17 +88,23 @@ def test_get_files(tmpdir):
 def test_filter_files():
     from pyle.pyle import _filter_files
 
-    files = _filter_files(glob.glob("*.py"))
+    files = _filter_files(glob.glob(os.path.join(get_pyle_path(), "*.py")))
 
-    assert files == ["__init__.py", "pyle.py", "test_pyle.py"]
+    assert files == add_pyle_path(
+        ["__init__.py", "setup.py", "pyle.py", "test_pyle.py"]
+    )
 
 
 def test_filter_files_type_time():
     from pyle.pyle import _filter_files
 
     for t in ["atime", "mtime", "ctime"]:
-        files = _filter_files(glob.glob("*.py"), type_time=t)
-        assert files == ["__init__.py", "pyle.py", "test_pyle.py"]
+        files = _filter_files(
+            glob.glob(os.path.join(get_pyle_path(), "*.py")), type_time=t
+        )
+        assert files == add_pyle_path(
+            ["__init__.py", "setup.py", "pyle.py", "test_pyle.py"]
+        )
 
 
 def test_filter_files_empty_1():
@@ -93,7 +112,7 @@ def test_filter_files_empty_1():
     from pyle.pyle import _filter_files
 
     files = _filter_files(
-        glob.glob("*.py"),
+        glob.glob(os.path.join(get_pyle_path(), "*.py")),
         from_time=datetime.datetime(1970, 1, 1),
         to_time=datetime.datetime(1970, 1, 2),
     )
@@ -105,7 +124,10 @@ def test_filter_files_empty_2():
     import datetime
     from pyle.pyle import _filter_files
 
-    files = _filter_files(glob.glob("*.py"), to_time=datetime.datetime(1970, 1, 2))
+    files = _filter_files(
+        glob.glob(os.path.join(get_pyle_path(), "*.py")),
+        to_time=datetime.datetime(1970, 1, 2),
+    )
 
     assert files == []
 
@@ -116,6 +138,8 @@ def test_filter_files_empty_3():
 
     for t in ["atime", "mtime", "ctime"]:
         files = _filter_files(
-            glob.glob("*.py"), to_time=datetime.datetime(1970, 1, 2), type_time=t
+            glob.glob(os.path.join(get_pyle_path(), "*.py")),
+            to_time=datetime.datetime(1970, 1, 2),
+            type_time=t,
         )
         assert files == []
