@@ -85,6 +85,32 @@ def test_get_files(tmpdir):
     assert l == files
 
 
+def test_get_files_dict(tmpdir):
+    import argparse
+    import datetime
+    from pyle import get_files
+
+    l = []
+    for i in range(10):
+        l.append(touch_file(tmpdir, get_random_string()))
+
+    d = argparse.Namespace()
+    d.pyle_files = l
+    d.from_date = datetime.datetime.strptime(
+        datetime.datetime(1970, 1, 1).strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S"
+    )
+    d.to_date = datetime.datetime.strptime(
+        datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S"
+    )
+    d.from_date = datetime.datetime(1970, 1, 1)
+    d._to_date = datetime.datetime.now()
+    d.time_type = "ctime"
+
+    files = get_files(vars(d))
+
+    assert l == files
+
+
 def test_filter_files():
     from pyle.pyle import _filter_files
 
