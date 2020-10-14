@@ -126,10 +126,10 @@ def add_pyle_parser(parser, name="File", help=None):
         help="use status change time",
     )
 
-    if help:
-        files_help = help
-    else:
+    if help is None:
         files_help = "List of " + name
+    else:
+        files_help = help
 
     # Positional parameters
     parser.add_argument(
@@ -139,10 +139,6 @@ def add_pyle_parser(parser, name="File", help=None):
 
 def add_parser(parser, name="File", help=None):
     add_pyle_parser(parser, name, help)
-
-
-def main(args):
-    print("Files:", get_files(args))
 
 
 if __name__ == "__main__":
@@ -164,4 +160,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main(args)
+    print("Files:", get_files(args))
